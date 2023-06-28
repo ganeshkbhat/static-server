@@ -2,7 +2,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const fs = require('fs');
-const server = require('../index'); // Assuming the server code is in a separate file called index.js
+const server = require('../src/http'); // Assuming the server code is in a separate file called server.js
 
 chai.use(chaiHttp);
 const expect = chai.expect;
