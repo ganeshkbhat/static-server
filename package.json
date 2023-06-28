@@ -24,6 +24,9 @@
     "url": "https://github.com/ganeshkbhat/static-serve/issues",
     "email": "ganeshsurfs@gmail.com"
   },
+  "bin": {
+    "nserve": "index.js"
+  },
   "homepage": "https://github.com/ganeshkbhat/static-serve#readme",
   "keywords": [],
   "devDependencies": {
@@ -35,5 +38,9 @@
     "safe-regex": "^2.1.1",
     "sinon": "^14.0.0",
     "unimported": "^1.22.0"
+  },
+  "dependencies": {
+    "hasher-apis": "^0.2.7",
+    "pem": "^1.14.8"
   }
 }

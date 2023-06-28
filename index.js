@@ -1,10 +1,92 @@
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const path = require('path');
+const hashers = require("hasher-apis");
+// const pem = require('pem');
+
 
 const directory = process.argv[2]; // Replace with the desired directory
+const port = process.argv[3];
 
-const server = http.createServer((req, res) => {
+function comparekeys(objectOne, ObjectTwo) {
+  const keys1 = Object.keys(objectOne);
+  const keys2 = Object.keys(ObjectTwo);
+
+  if (keys1.length !== keys2.length) return false;
+  keys1.sort();
+  keys2.sort();
+
+  for (let i = 0; i < keys1.length; i++) {
+    const key1 = keys1[i];
+    const key2 = keys2[i];
+    if (key1 !== key2) return false;
+
+    const value1 = objectOne[key1];
+    const value2 = ObjectTwo[key2];
+
+    if (typeof value1 === 'object' && typeof value2 === 'object') {
+      const keysMatch = this.comparekeys(value1, value2);
+      if (!keysMatch) return false;
+    }
+  }
+  return true;
+}
+
+function generateKeys(storePath) {
+  const { publicKey, privateKey } = hashers._genKeyPair();
+  let pbk = hashers._dumpKeyFile(path.join(storePath, "public"), publicKey);
+  let pvk = hashers._dumpKeyFile(path.join(storePath, "private"), privateKey);
+  if (!!pbk && !!pvk) return true;
+  return false;
+}
+
+
+let server, private, public;
+
+
+if (process.argv[4] === 'secure') {
+
+  if (!!process.argv[5]) {
+    public = process.argv[5]
+  }
+
+  if (!!process.argv[6]) {
+    private = process.argv[6]
+  }
+
+  if (!process.argv[5] || !process.argv[6]) {
+    if (!path.join(directory, "private.pem") || !path.join(directory, "public.pem")) {
+      generateKeys(directory);
+    }
+  }
+
+  const privateKey = fs.readFileSync(!!private ? private : path.join(directory, "private.pem"), 'utf8'); // Replace with the path to your private key file
+  const certificate = fs.readFileSync(!!public ? public : path.join(directory, "public.pem"), 'utf8'); // Replace with the path to your certificate file
+  const credentials = { key: privateKey, cert: certificate };
+
+  // function createCert() {
+  //   return new Promise(function (resolve, reject) {
+  //     pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
+  //       if (err) {
+  //         reject({ "error": err })
+  //       }
+  //       const credentials = { key: keys.clientKey, cert: keys.certificate };
+  //       resolve(credentials);
+  //     });
+  //   });
+  // }
+  // ;
+  // createCert().then(function (credentials) {
+  //   server = https.createServer(credentials);
+  // });
+  server = https.createServer(credentials);
+
+} else {
+  server = http.createServer();
+}
+
+server.on('request', (req, res) => {
   // Get the requested file path relative to the specified directory
   const requestedPath = path.join(directory, req.url);
 
@@ -50,7 +132,6 @@ const server = http.createServer((req, res) => {
   });
 });
 
-const port = process.argv[3];
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
