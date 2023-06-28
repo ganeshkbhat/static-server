@@ -1,2 +1,2 @@
-# static-server
-Run a simple static server using node based static-server
+# httpserve
+Run a simple static server using node based httpserve

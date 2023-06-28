@@ -1,0 +1,39 @@
+{
+  "name": "httpserve",
+  "version": "1.0.0",
+  "description": "Run a simple static server using node based static file server using httpserve",
+  "main": "index.js",
+  "exports": {
+    "require": "./index.js",
+    "import": "./index.mjs"
+  },
+  "directories": {
+    "test": "test",
+    "lib": "./src/**"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ganeshkbhat/static-serve.git"
+  },
+  "author": "Ganesh Bhat <ganeshsurfs@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ganeshkbhat/static-serve/issues",
+    "email": "ganeshsurfs@gmail.com"
+  },
+  "homepage": "https://github.com/ganeshkbhat/static-serve#readme",
+  "keywords": [],
+  "devDependencies": {
+    "@types/node": "^18.11.3",
+    "chai": "^4.3.6",
+    "hpp": "^0.2.3",
+    "loadtest": "^5.2.0",
+    "mocha": "^10.0.0",
+    "safe-regex": "^2.1.1",
+    "sinon": "^14.0.0",
+    "unimported": "^1.22.0"
+  }
+}
