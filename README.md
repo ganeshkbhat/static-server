@@ -8,6 +8,8 @@ Install using the following command
 
 `npm install -g servedev`
 
+# RUN SERVER IN FOLDER
+
 Run command to run a http development server
 
 `nserve ./www 3000 0 list=true index`
@@ -25,3 +27,4 @@ Run command to run a http development server
 `nserve ./www 3000 secure=/path/to/pvt.key,path/to/pub.crt list={format:'json',names:['index','index.json','/']} index`
 
 `nserve ./www 3000 secure=/path/to/pvt.key,path/to/pub.crt list={format:'json',names:['index','index.json','/']} index`
+
