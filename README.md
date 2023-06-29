@@ -1,12 +1,12 @@
 # nserve
 
-Run a simple static server using node based http server / nserve
+Run a simple static server using node based http server from package serverdev / nserve
 
 # INSTALLATION
 
 Install using the following command
 
-`npm install -g servedev`
+`npm install -g serverdev`
 
 # RUN SERVER IN FOLDER
 
