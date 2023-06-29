@@ -11,6 +11,9 @@ Run command to run a http development server
 
 `node index.js ./www 3000 0 list=true index`
 
+`nserve ./www 3000 0 list=true index`
+
+
 <!-- 
 `node index.js ./www 3000 secure=false list=true index`
 
