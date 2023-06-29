@@ -1,7 +1,7 @@
 {
-  "name": "serves",
+  "name": "servedev",
   "version": "1.0.0",
-  "description": "Run a simple static server using node based static file server using httpserve",
+  "description": "Run a simple static server using node based static file server using servedev",
   "main": "index.js",
   "exports": {
     "require": "./index.js",
@@ -12,6 +12,7 @@
     "lib": "./src/**"
   },
   "scripts": {
+    "preinstall": "npm i -g servedev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

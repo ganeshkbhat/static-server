@@ -15,10 +15,12 @@
 
 'use strict';
 
+
 const port = process.argv[3];
 let server;
+console.log(process.argv);
 
-if (process.argv[4] === "secure") {
+if (process.argv[4].includes("secure")) {
   server = require("./src/https");
 } else {
   server = require("./src/http");
