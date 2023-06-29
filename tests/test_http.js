@@ -1,3 +1,20 @@
+/**
+ * 
+ * Package: httpserve
+ * Author: Ganesh B
+ * Description: Nodejs npm module to traverse folder using code or cli or use glob patterns
+ * Install: npm i httpserve --save
+ * Github: https://github.com/ganeshkbhat/static-serve
+ * npmjs Link: https://www.npmjs.com/package/httpserve
+ * File: index.js
+ * File Description: 
+ * 
+*/
+
+/* eslint no-console: 0 */
+
+'use strict';
+
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
@@ -59,11 +76,11 @@ describe('Server', () => {
     });
   });
 
-  describe('GET /images/logo.png', () => {
-    it('should return the content of logo.png', (done) => {
+  describe('GET /images/test.jpg', () => {
+    it('should return the content of test.jpg', (done) => {
       chai
         .request(server)
-        .get('/images/logo.png')
+        .get('/images/test.jpg')
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.a('object');
