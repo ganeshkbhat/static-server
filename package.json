@@ -40,7 +40,8 @@
     "unimported": "^1.22.0"
   },
   "dependencies": {
-    "hasher-apis": "^0.2.7",
-    "pem": "^1.14.8"
+    "@fastify/static": "^6.10.2",
+    "fastify": "^4.18.0",
+    "hasher-apis": "^0.2.7"
   }
 }

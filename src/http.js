@@ -21,51 +21,29 @@ const path = require('path');
 
 const directory = process.argv[2]; // Replace with the desired directory
 const port = process.argv[3];
+const secure = process.argv[4]; // secure=pr.key,pub.crt
+const privateKeyPath = process.argv[4].split("=")[1].split(",")[0]; // secure=pr.key,pub.crt
+const publicKeyPath = process.argv[4].split("=")[1].split(",")[1]; // secure=pr.key,pub.crt
+const list = process.argv[5] === "list" ? true : false; // list || nolist
+// {
+//   format: 'json',
+//   names: ['index', 'index.json', '/']
+// } : false; // list || nolist
+const index = process.argv[6] === "index" ? "index.html" : false; // index || noindex
 
-const server = http.createServer((req, res) => {
-  // Get the requested file path relative to the specified directory
-  const requestedPath = path.join(directory, req.url);
+const privateKey = fs.readFileSync(!!privateKeyPath ? path.join(privateKeyPath) : path.join(__dirname, directory, "../../", "private.pem"), 'utf8'); // Replace with the path to your private key file
+const certificate = fs.readFileSync(!!publicKeyPath ? path.join(publicKeyPath) : path.join(__dirname, directory, "../../", "public.pem"), 'utf8'); // Replace with the path to your certificate file
+// console.log(path.join(__dirname, directory, "../../", "private.pem"), path.join(__dirname, "../", directory));
 
-  // Get the absolute path of the requested file
-  const filePath = path.resolve(requestedPath);
+const credentials = { key: privateKey, cert: certificate };
+const fastify = require('fastify')({ logger: true }) //, http2: (!!secure) ? true : false }), https: (!!secure) ? { allowHTTP1: true } : false });
 
-  // Check if the requested file is within the specified directory
-  if (!filePath.startsWith(directory)) {
-    res.statusCode = 403;
-    res.end('Forbidden!');
-    return;
-  }
+fastify.register(require('@fastify/static'), {
+  root: path.join(__dirname, "../", directory),
+  index: false,
+  list: list
+  // prefix: '/public/', // optional: default '/'
+  // constraints: { host: 'example.com' } // optional: default {}
+})
 
-  // Check if the file exists
-  fs.access(filePath, fs.constants.F_OK, (err) => {
-    if (err) {
-      res.statusCode = 404;
-      res.end('File not found!');
-      return;
-    }
-
-    // Determine the content type based on the file extension
-    const ext = path.extname(filePath);
-    let contentType = 'text/html';
-    if (ext === '.css') {
-      contentType = 'text/css';
-    } else if (ext === '.png') {
-      contentType = 'image/png';
-    }
-
-    // Read the file and serve it with the appropriate content type
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        res.statusCode = 500;
-        res.end('Error reading the file!');
-        return;
-      }
-
-      res.setHeader('Content-Type', contentType);
-      res.statusCode = 200;
-      res.end(data);
-    });
-  });
-});
-
-module.exports = server;
+module.exports = fastify;

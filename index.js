@@ -16,6 +16,7 @@
 'use strict';
 
 const port = process.argv[3];
+let server;
 
 if (process.argv[4] === "secure") {
   server = require("./src/https");
@@ -23,6 +24,6 @@ if (process.argv[4] === "secure") {
   server = require("./src/http");
 }
 
-server.listen(port, () => {
+server.listen({ port: port }, () => {
   console.log(`Server running on port ${port}`);
 });
