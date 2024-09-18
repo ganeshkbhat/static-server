@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@fastify/static": "^6.10.2",
-    "fastify": "^4.18.0",
+    "fastify": "^4.28.1",
     "hasher-apis": "^0.2.7"
   }
 }
